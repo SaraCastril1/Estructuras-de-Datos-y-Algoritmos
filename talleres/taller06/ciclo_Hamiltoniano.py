@@ -41,10 +41,13 @@ def cicloHamiltoniano(graph, size):
   nuevo_vertex = 0
   circuito_hamiltoniano = [0]
   
+  
   for i in range (0, size+1):
     visitados[nuevo_vertex] = True
     #haga 1 ciclo para escoger sucesor + cerca no visitado:
+    peso_menor = 9999999
     for j in graph.getSuccessors(circuito_hamiltoniano[-1]):
+      #print(str(circuito_hamiltoniano[-1])+" "+str(j))
       candidato = j[0]
       peso_candidato = j[1]
       if visitados[candidato] == False and peso_candidato < peso_menor:
@@ -52,10 +55,12 @@ def cicloHamiltoniano(graph, size):
         peso_total += j[1]
         circuito_hamiltoniano.append(j[0])
         nuevo_vertex = candidato
-        break
 
+        
+  peso_total += graph.getWeight(circuito_hamiltoniano[-1], 0)
   circuito_hamiltoniano.append(0)
   print("Su circuito hamitoniano es: ", circuito_hamiltoniano, " con un costo mínimo de: ", peso_total)
+  print("Visitados", visitados)
       
 
 
@@ -80,7 +85,7 @@ def ciclo_Hamiltoniano_desde_cualquier_vertice(graph, v_inicial, size):
         peso_total += j[1]
         circuito_hamiltoniano.append(j[0])
         nuevo_vertex = candidato
-        break
+
 
   circuito_hamiltoniano.append(v_inicial)
   print("Su circuito hamitoniano es: ", circuito_hamiltoniano, " con un costo mínimo de: ", peso_total)
@@ -103,5 +108,3 @@ graph.addArc(3,2,5)
 graph.addArc(3,1,11)
 graph.addArc(3,0,4)
 cicloHamiltoniano(graph, size)
-
-ciclo_Hamiltoniano_desde_cualquier_vertice(graph, 3, size)
